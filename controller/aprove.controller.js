@@ -33,6 +33,24 @@ function createNewTag(req, res) {
     });
 }
 
+function getAllTag(req, res) {
+  models.tb_aproves
+    .findAll()
+    .then((result) => {
+      res.status(201).json({
+        message: "New Tag Create Successfully",
+        post: result,
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Something went wrong",
+        error: error,
+      });
+    });
+}
+
 module.exports = {
   createNewTag,
+  getAllTag,
 };

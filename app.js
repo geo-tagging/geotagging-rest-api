@@ -3,9 +3,9 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-const databaseRoutes = require("./routes/aprove");
+const aprovesRoutes = require("./routes/aproves");
 
 app.use(bodyParser.json());
-app.use("/post", databaseRoutes);
+app.use("/aproves", aprovesRoutes);
 
 module.exports = app;
