@@ -1,9 +1,7 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Aprove extends Model {
+  class tb_aproves extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,23 +11,32 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Aprove.init({
-    id_jenis: DataTypes.INTEGER,
-    id_kegiatan: DataTypes.INTEGER,
-    id_lokasi: DataTypes.INTEGER,
-    id_sk: DataTypes.INTEGER,
-    tanggal_tanam: DataTypes.STRING,
-    latitude: DataTypes.STRING,
-    longitude: DataTypes.STRING,
-    elevasi: DataTypes.STRING,
-    images: DataTypes.STRING,
-    date_modified: DataTypes.STRING,
-    verification: DataTypes.STRING,
-    kondisi: DataTypes.STRING,
-    uid: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Aprove',
-  });
-  return Aprove;
+  tb_aproves.init(
+    {
+      id_aproves: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+
+      id_jenis: DataTypes.INTEGER,
+      id_kegiatan: DataTypes.INTEGER,
+      id_lokasi: DataTypes.INTEGER,
+      id_sk: DataTypes.INTEGER,
+      tanggal_tanam: DataTypes.STRING,
+      latitude: DataTypes.STRING,
+      longitude: DataTypes.STRING,
+      elevasi: DataTypes.STRING,
+      images: DataTypes.STRING,
+      date_modified: DataTypes.STRING,
+      verification: DataTypes.STRING,
+      kondisi: DataTypes.STRING,
+      uid: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "tb_aproves",
+    }
+  );
+  return tb_aproves;
 };

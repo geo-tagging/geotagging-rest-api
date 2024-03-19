@@ -1,9 +1,11 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+const databaseRoutes = require("./routes/aprove");
+
+app.use(bodyParser.json());
+app.use("/post", databaseRoutes);
 
 module.exports = app;

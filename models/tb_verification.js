@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Verification extends Model {
     /**
@@ -13,24 +11,27 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Verification.init({
-    plant_id: DataTypes.INTEGER,
-    id_jenis: DataTypes.INTEGER,
-    id_kegiatan: DataTypes.INTEGER,
-    id_lokasi: DataTypes.INTEGER,
-    id_sk: DataTypes.INTEGER,
-    tanggal_tanam: DataTypes.STRING,
-    latitude: DataTypes.STRING,
-    longitude: DataTypes.STRING,
-    elevasi: DataTypes.STRING,
-    images: DataTypes.STRING,
-    date_modified: DataTypes.STRING,
-    verification: DataTypes.STRING,
-    kondisi: DataTypes.STRING,
-    uid: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Verification',
-  });
+  Verification.init(
+    {
+      plant_id: DataTypes.INTEGER,
+      id_jenis: DataTypes.INTEGER,
+      id_kegiatan: DataTypes.INTEGER,
+      id_lokasi: DataTypes.INTEGER,
+      id_sk: DataTypes.INTEGER,
+      tanggal_tanam: DataTypes.STRING,
+      latitude: DataTypes.STRING,
+      longitude: DataTypes.STRING,
+      elevasi: DataTypes.STRING,
+      images: DataTypes.STRING,
+      date_modified: DataTypes.STRING,
+      verification: DataTypes.STRING,
+      kondisi: DataTypes.STRING,
+      uid: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "tb_verification",
+    }
+  );
   return Verification;
 };
