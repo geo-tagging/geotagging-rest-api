@@ -1,4 +1,5 @@
 const models = require("../models");
+const Sequelize = require("sequelize");
 
 function createNewTag(req, res) {
   const aprove = {
@@ -50,7 +51,43 @@ function getAllTag(req, res) {
     });
 }
 
+function searchTags(req, res) {
+  const keyword = req.query.keyword; // Mengambil kata kunci dari query string
+  const sortBy = req.query.sortBy; // Mengambil parameter untuk mengurutkan
+  const orderBy = req.query.orderBy; // Mengambil parameter untuk order by
+
+  // Contoh query pencarian dengan Sequelize
+  models.tb_aproves
+    .findAll({
+      where: {
+        // Menggunakan operator LIKE untuk mencocokkan kata kunci dengan kolom tertentu
+        [Sequelize.Op.or]: [
+          { id_jenis: { [Sequelize.Op.like]: `%${keyword}%` } },
+          { id_kegiatan: { [Sequelize.Op.like]: `%${keyword}%` } },
+          // Tambahkan kolom-kolom lain yang ingin dijadikan kriteria pencarian
+        ],
+      },
+      order: [
+        // Mengatur pengurutan dan order by berdasarkan parameter yang diberikan
+        [sortBy, orderBy],
+      ],
+    })
+    .then((result) => {
+      res.status(200).json({
+        message: "Search results",
+        data: result,
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Something went wrong",
+        error: error,
+      });
+    });
+}
+
 module.exports = {
   createNewTag,
   getAllTag,
+  searchTags,
 };
