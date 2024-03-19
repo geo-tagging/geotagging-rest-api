@@ -62,6 +62,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Verifications");
+    await queryInterface.dropTable("tb_verifications");
   },
 };

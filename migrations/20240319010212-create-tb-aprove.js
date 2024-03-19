@@ -59,6 +59,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Aproves");
+    await queryInterface.dropTable("tb_aproves");
   },
 };

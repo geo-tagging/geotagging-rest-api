@@ -23,6 +23,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("tb_lokasis");
+    await queryInterface.dropTable("tb_lokasi");
   },
 };

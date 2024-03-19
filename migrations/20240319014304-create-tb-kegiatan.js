@@ -23,6 +23,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("tb_s");
+    await queryInterface.dropTable("tb_kegiatan");
   },
 };
