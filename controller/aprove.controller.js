@@ -86,8 +86,28 @@ function searchTags(req, res) {
     });
 }
 
+function deleteTag(req, res) {
+  const id_aproves = req.params.id_aproves;
+  const uid = 1;
+
+  models.tb_aproves
+    .destroy({ where: { id_aproves: id_aproves, uid: uid } })
+    .then((result) => {
+      res.status(200).json({
+        message: "Post deleted successfully",
+      });
+    })
+    .catch((error) => {
+      res.status(200).json({
+        message: "Something went wrong",
+        error: error,
+      });
+    });
+}
+
 module.exports = {
   createNewTag,
   getAllTag,
   searchTags,
+  deleteTag,
 };
