@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("tb_aproves", {
-      id: {
+      id_aproves: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,

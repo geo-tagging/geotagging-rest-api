@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("tb_verifications", {
-      id: {
+      id_verification: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
