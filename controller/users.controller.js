@@ -1,6 +1,6 @@
 const models = require("../models");
 const bcryptjs = require("bcryptjs");
-const je = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 function signUp(req, res) {
   models.tb_user
@@ -44,6 +44,51 @@ function signUp(req, res) {
     });
 }
 
+function login(req, res) {
+  models.tb_user
+    .findOne({ where: { email: req.body.email } })
+    .then((user) => {
+      if (user === null) {
+        res.status(401).json({
+          message: "Invalid credentials!",
+        });
+      } else {
+        bcryptjs.compare(
+          req.body.password,
+          user.password,
+          function (err, result) {
+            if (result) {
+              const token = jwt.sign(
+                {
+                  email: user.email,
+                  uid: user.uid,
+                },
+                "secret",
+                function (err, token) {
+                  res.status(200).json({
+                    message: "Authentication successfull!",
+                    token: token,
+                  });
+                }
+              );
+            } else {
+              res.status(401).json({
+                message: "Invalid credentials!",
+              });
+            }
+          }
+        );
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Something went wrong!",
+      });
+    });
+}
+
 module.exports = {
   signUp,
+  login,
 };
