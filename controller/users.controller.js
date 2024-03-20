@@ -1,3 +1,4 @@
+require("dotenv").config();
 const models = require("../models");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -63,7 +64,7 @@ function login(req, res) {
                   email: user.email,
                   uid: user.uid,
                 },
-                "secret",
+                process.env.JWT_KEY,
                 function (err, token) {
                   res.status(200).json({
                     message: "Authentication successfull!",
