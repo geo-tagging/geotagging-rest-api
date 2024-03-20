@@ -1,5 +1,6 @@
 const models = require("../models");
 const Sequelize = require("sequelize");
+const validator = require("fastest-validator");
 
 function createNewTag(req, res) {
   const aprove = {
@@ -17,6 +18,32 @@ function createNewTag(req, res) {
     kondisi: req.body.kondisi,
     uid: req.body.uid,
   };
+
+  const schema = {
+    id_jenis: { type: "number", optional: false },
+    id_kegiatan: { type: "number", optional: false },
+    id_lokasi: { type: "number", optional: false },
+    id_sk: { type: "number", optional: false },
+    tanggal_tanam: { type: "string", optional: true },
+    latitude: { type: "string", optional: true },
+    longitude: { type: "string", optional: true },
+    elevasi: { type: "string", optional: true },
+    images: { type: "string", optional: true },
+    date_modified: { type: "string", optional: true },
+    verification: { type: "string", optional: true },
+    kondisi: { type: "string", optional: true },
+    uid: { type: "number", optional: false },
+  };
+
+  const v = new validator();
+  const validationResponse = v.validate(aprove, schema);
+
+  if (validationResponse !== true) {
+    return res.status(400).json({
+      message: "Validation failed",
+      error: validationResponse,
+    });
+  }
 
   models.tb_aproves
     .create(aprove)
