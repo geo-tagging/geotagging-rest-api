@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      tb_verification.belongsTo(models.tb_user, { foreignKey: "uid" });
+      tb_verification.belongsTo(models.tb_jenis, { foreignKey: "id_jenis" });
+      tb_verification.belongsTo(models.tb_kegiatan, {
+        foreignKey: "id_kegiatan",
+      });
+      tb_verification.belongsTo(models.tb_lokasi, { foreignKey: "id_lokasi" });
+      tb_verification.belongsTo(models.tb_sk, { foreignKey: "id_sk" });
+      tb_verification.belongsTo(models.tb_status, { foreignKey: "id_status" });
     }
   }
   tb_verification.init(

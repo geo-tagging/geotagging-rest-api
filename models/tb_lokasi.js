@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      tb_lokasi.hasMany(models.tb_verification, { foreignKey: "id_lokasi" });
+      tb_lokasi.hasMany(models.tb_approve, { foreignKey: "id_lokasi" });
     }
   }
   tb_lokasi.init(

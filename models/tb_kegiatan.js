@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      tb_kegiatan.hasMany(models.tb_verification, {
+        foreignKey: "id_kegiatan",
+      });
+      tb_kegiatan.hasMany(models.tb_approve, {
+        foreignKey: "id_kegiatan",
+      });
     }
   }
   tb_kegiatan.init(

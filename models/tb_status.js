@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class tb_status extends Model {
     /**
@@ -11,13 +9,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      tb_status.hasMany(models.tb_verification, { foreignKey: "id_status" });
+      tb_status.hasMany(models.tb_approve, { foreignKey: "id_status" });
     }
   }
-  tb_status.init({
-    status: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'tb_status',
-  });
+  tb_status.init(
+    {
+      id_status: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      status: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "tb_status",
+    }
+  );
   return tb_status;
 };
