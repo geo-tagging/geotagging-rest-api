@@ -75,7 +75,7 @@ function getAllTag(req, res) {
     .findAll()
     .then((result) => {
       res.status(201).json({
-        message: "New Tag Create Successfully",
+        message: "Get All Tag Successfully",
         post: result,
       });
     })

@@ -49,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "tb_approve",
+      tableName: "tb_approve",
     }
   );
   return tb_approve;

@@ -52,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "tb_verification",
+      tableName: "tb_verification",
     }
   );
   return tb_verification;
