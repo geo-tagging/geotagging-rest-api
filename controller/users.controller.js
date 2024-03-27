@@ -12,7 +12,7 @@ function signUp(req, res) {
           message: "Email already exists!",
         });
       } else {
-        models.bcryptjs.genSalt(10, function (err, salt) {
+        bcryptjs.genSalt(10, function (err, salt) {
           bcryptjs.hash(req.body.password, salt, function (err, hash) {
             const user = {
               email: req.body.email,
