@@ -17,6 +17,13 @@ router.get(
   checkAuthMiddleware.checkAuth,
   aproveController.searchTags
 );
+
+router.patch(
+  "/:id_tanaman",
+  checkAuthMiddleware.checkAuth,
+  aproveController.updateTag
+);
+
 router.delete(
   "/:id_tanaman",
   checkAuthMiddleware.checkAuth,
