@@ -10,14 +10,14 @@ app.use(
   })
 );
 
-const aprovesRoutes = require("./routes/aproves");
+const approveRoutes = require("./routes/approve");
 const userRoutes = require("./routes/user");
 const imageRoutes = require("./routes/image");
 
 app.use(bodyParser.json());
 app.use("/upload", express.static("upload"));
 
-app.use("/aproves", aprovesRoutes);
+app.use("/approve", approveRoutes);
 app.use("/user", userRoutes);
 app.use("/image", imageRoutes);
 

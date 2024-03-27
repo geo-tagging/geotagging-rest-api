@@ -1,5 +1,5 @@
 const express = require("express");
-const aproveController = require("../controller/aprove.controller");
+const aproveController = require("../controller/approve.controller");
 const imageUploader = require("../helper/image-uploader");
 const checkAuthMiddleware = require("../middleware/check-auth");
 const router = express.Router();
@@ -18,7 +18,7 @@ router.get(
   aproveController.searchTags
 );
 router.delete(
-  "/:id_aproves",
+  "/:id_tanaman",
   checkAuthMiddleware.checkAuth,
   aproveController.deleteTag
 );
