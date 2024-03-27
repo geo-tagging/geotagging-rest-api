@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   tb_approve.init(
     {
+      id_tanaman: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       id_jenis: DataTypes.INTEGER,
       id_kegiatan: DataTypes.INTEGER,
       id_lokasi: DataTypes.INTEGER,

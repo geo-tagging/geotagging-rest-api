@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   tb_verification.init(
     {
+      id_verification: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       id_tanaman: DataTypes.INTEGER,
       id_jenis: DataTypes.INTEGER,
       id_kegiatan: DataTypes.INTEGER,
