@@ -8,7 +8,7 @@ function signUp(req, res) {
     .findOne({ where: { email: req.body.email } })
     .then((result) => {
       if (result) {
-        res.status(409).json9({
+        res.status(409).json({
           message: "Email already exists!",
         });
       } else {
