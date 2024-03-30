@@ -16,3 +16,9 @@ router.get(
   checkAuthMiddleware.checkAuth,
   verificationController.getAllHistory
 );
+
+router.get(
+  "/search",
+  checkAuthMiddleware.checkAuth,
+  verificationController.searchHistory
+);
