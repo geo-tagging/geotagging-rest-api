@@ -10,3 +10,9 @@ router.post(
   imageUploader.upload.single("image"),
   verificationController.createNewVerification
 );
+
+router.get(
+  "/",
+  checkAuthMiddleware.checkAuth,
+  verificationController.getAllHistory
+);

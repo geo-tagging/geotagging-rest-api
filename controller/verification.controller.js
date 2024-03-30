@@ -72,6 +72,24 @@ function createNewVerification(req, res) {
     });
 }
 
+function getAllHistory(req, res) {
+  models.tb_verification
+    .findAll()
+    .then((result) => {
+      res.status(201).json({
+        message: "Get All History Successfully",
+        post: result,
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Something went wrong",
+        error: error,
+      });
+    });
+}
+
 module.exports = {
   createNewVerification,
+  getAllHistory,
 };
