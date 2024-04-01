@@ -124,8 +124,88 @@ function searchHistory(req, res) {
     });
 }
 
+function editVerificationAction(req, res) {
+  const id_verification = req.params.id_verification;
+  const newIdAction = req.body.id_action;
+
+  // Validasi id_action
+  if (![1, 2, 3].includes(newIdAction)) {
+    return res.status(400).json({
+      message: "Invalid id_action value",
+    });
+  }
+
+  models.tb_verification
+    .findByPk(id_verification)
+    .then((verification) => {
+      if (!verification) {
+        return res.status(404).json({
+          message: "Verification not found",
+        });
+      }
+
+      // Jika id_action diubah menjadi 2 (approved)
+      if (newIdAction === 2) {
+        // Periksa apakah data sudah ada di tb_approve
+        models.tb_approve
+          .findOne({ where: { id_tanaman: verification.id_tanaman } })
+          .then((existingApprove) => {
+            if (!existingApprove) {
+              // Jika tidak ada, tambahkan ke tb_approve
+              models.tb_approve
+                .create(verification.dataValues)
+                .then(() => {
+                  console.log("Data copied to tb_approve");
+                })
+                .catch((error) => {
+                  console.error("Failed to copy data to tb_approve:", error);
+                });
+            } else {
+              // Jika sudah ada, lakukan pembaruan (update)
+              existingApprove
+                .update(verification.dataValues)
+                .then(() => {
+                  console.log("Data updated in tb_approve");
+                })
+                .catch((error) => {
+                  console.error("Failed to update data in tb_approve:", error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.error("Failed to find data in tb_approve:", error);
+          });
+      } else if (newIdAction === 3) {
+        // Jika id_action diubah menjadi 3 (rejected)
+        console.log("Data rejected, no action taken");
+      }
+
+      // Update id_action pada data verifikasi
+      verification
+        .update({ id_action: newIdAction })
+        .then(() => {
+          res.status(200).json({
+            message: "Verification id_action updated successfully",
+          });
+        })
+        .catch((error) => {
+          res.status(500).json({
+            message: "Failed to update verification id_action",
+            error: error,
+          });
+        });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Something went wrong",
+        error: error.message,
+      });
+    });
+}
+
 module.exports = {
   createNewVerification,
   getAllHistory,
   searchHistory,
+  editVerificationAction,
 };

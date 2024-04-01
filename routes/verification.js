@@ -22,3 +22,11 @@ router.get(
   checkAuthMiddleware.checkAuth,
   verificationController.searchHistory
 );
+
+router.patch(
+  "/:id_verification",
+  checkAuthMiddleware.checkAuth,
+  verificationController.editVerificationAction
+);
+
+module.exports = router;
