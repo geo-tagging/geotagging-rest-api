@@ -50,7 +50,7 @@ function createNewVerification(req, res) {
   const validationResponse = v.validate(verification, schema);
 
   if (validationResponse !== true) {
-    return res.status(400).json({
+    return res.status(422).json({
       message: "Validation failed",
       error: validationResponse,
     });
@@ -76,7 +76,7 @@ function getAllHistory(req, res) {
   models.tb_verification
     .findAll()
     .then((result) => {
-      res.status(201).json({
+      res.status(200).json({
         message: "Get All History Successfully",
         post: result,
       });
@@ -129,9 +129,9 @@ function editVerificationAction(req, res) {
   const newIdAction = req.body.id_action;
 
   // Validasi id_action
-  if (![1, 2, 3].includes(newIdAction)) {
+  if (![1, 2, 3, 4].includes(newIdAction)) {
     return res.status(400).json({
-      message: "Invalid id_action value",
+      message: "Invalid verification option",
     });
   }
 
@@ -155,29 +155,44 @@ function editVerificationAction(req, res) {
               models.tb_approve
                 .create(verification.dataValues)
                 .then(() => {
-                  console.log("Data copied to tb_approve");
+                  res.status(200).json({
+                    message: "Data has been verified!",
+                  });
                 })
                 .catch((error) => {
-                  console.error("Failed to copy data to tb_approve:", error);
+                  res.status(400).json({
+                    message: "Failed to input data to tb_approve",
+                    error: error,
+                  });
                 });
             } else {
               // Jika sudah ada, lakukan pembaruan (update)
               existingApprove
                 .update(verification.dataValues)
                 .then(() => {
-                  console.log("Data updated in tb_approve");
+                  res.status(200).json({
+                    message: "Data has been updated!",
+                  });
                 })
                 .catch((error) => {
-                  console.error("Failed to update data in tb_approve:", error);
+                  res.status(400).json({
+                    message: "Failed to update data to tb_approve",
+                    error: error,
+                  });
                 });
             }
           })
           .catch((error) => {
-            console.error("Failed to find data in tb_approve:", error);
+            res.status(400).json({
+              message: "Failed to find data",
+              error: error,
+            });
           });
       } else if (newIdAction === 3) {
         // Jika id_action diubah menjadi 3 (rejected)
-        console.log("Data rejected, no action taken");
+        res.status(200).json({
+          message: "Data rejected, no action taken",
+        });
       }
 
       // Update id_action pada data verifikasi
@@ -185,12 +200,12 @@ function editVerificationAction(req, res) {
         .update({ id_action: newIdAction })
         .then(() => {
           res.status(200).json({
-            message: "Verification id_action updated successfully",
+            message: "Verification updated successfully",
           });
         })
         .catch((error) => {
-          res.status(500).json({
-            message: "Failed to update verification id_action",
+          res.status(400).json({
+            message: "Failed to update verification",
             error: error,
           });
         });

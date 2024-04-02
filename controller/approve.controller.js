@@ -74,7 +74,7 @@ function getAllTag(req, res) {
   models.tb_approve
     .findAll()
     .then((result) => {
-      res.status(201).json({
+      res.status(200).json({
         message: "Get All Tag Successfully",
         post: result,
       });
@@ -194,7 +194,7 @@ function updateTag(req, res) {
       tag
         .update(updatedTag)
         .then((updatedTag) => {
-          res.status(200).json({
+          res.status(201).json({
             message: "Tag updated successfully",
             tag: updatedTag,
           });
@@ -226,7 +226,7 @@ function deleteTag(req, res) {
       });
     })
     .catch((error) => {
-      res.status(200).json({
+      res.status(500).json({
         message: "Something went wrong",
         error: error,
       });
