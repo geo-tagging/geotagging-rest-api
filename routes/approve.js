@@ -10,7 +10,8 @@ router.post(
   imageUploader.upload.single("image"),
   aproveController.createNewTag
 );
-router.get("/", checkAuthMiddleware.checkAuth, aproveController.getAllTag);
+
+router.get("/tag", checkAuthMiddleware.checkAuth, aproveController.getAllTag);
 
 router.get(
   "/search",

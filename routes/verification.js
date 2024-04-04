@@ -12,7 +12,7 @@ router.post(
 );
 
 router.get(
-  "/",
+  "/tag",
   checkAuthMiddleware.checkAuth,
   verificationController.getAllHistory
 );
