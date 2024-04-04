@@ -71,18 +71,40 @@ function createNewTag(req, res) {
 }
 
 function getAllTag(req, res) {
-  models.tb_approve
-    .findAll()
+  models.tb_tanaman
+    .findAll({
+      include: [
+        { model: models.tb_jenis, attributes: ["nama"] },
+        { model: models.tb_kegiatan, attributes: ["kegiatan"] },
+        { model: models.tb_lokasi, attributes: ["lokasi"] },
+        { model: models.tb_sk, attributes: ["skppkh"] },
+      ],
+      attributes: [
+        "id_tanaman",
+        "id_jenis",
+        "id_kegiatan",
+        "id_lokasi",
+        "id_sk",
+        "tanggal",
+        "latitude",
+        "longitude",
+        "elevasi",
+      ],
+      order: [
+        // Menentukan pengurutan berdasarkan parameter yang diberikan
+        [orderBy, sort],
+      ],
+    })
     .then((result) => {
       res.status(200).json({
         message: "Get All Tag Successfully",
-        post: result,
+        data: result,
       });
     })
     .catch((error) => {
       res.status(500).json({
         message: "Something went wrong",
-        error: error,
+        error: error.message,
       });
     });
 }
