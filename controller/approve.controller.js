@@ -85,10 +85,19 @@ function getAllTag(req, res) {
         "id_kegiatan",
         "id_lokasi",
         "id_sk",
-        "tanggal",
+        "id_status",
+        "diameter",
+        "tinggi",
+        "tanggal_tanam",
+        "date_modified",
         "latitude",
         "longitude",
         "elevasi",
+        "easting",
+        "northing",
+        "images",
+        "id_Action",
+        "uid",
       ],
       order: [
         // Menentukan pengurutan berdasarkan parameter yang diberikan
@@ -126,6 +135,14 @@ function searchTags(req, res) {
             nama: { [Sequelize.Op.like]: `%${keyword}%` }, // Kondisi pencarian
           },
           required: true, // Menggunakan inner join agar hanya data yang cocok yang diambil
+        },
+        {
+          model: models.tb_approve,
+          attributes: ["id_tanaman"],
+          where: {
+            id_tanaman: { [Sequelize.Op.like]: `%${keyword}%` },
+          },
+          required: true,
         },
         {
           model: models.tb_kegiatan,

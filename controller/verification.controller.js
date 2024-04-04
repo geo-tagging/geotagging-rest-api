@@ -74,17 +74,49 @@ function createNewVerification(req, res) {
 
 function getAllHistory(req, res) {
   models.tb_verification
-    .findAll()
+    .findAll({
+      include: [
+        { model: models.tb_jenis, attributes: ["nama"] },
+        { model: models.tb_kegiatan, attributes: ["kegiatan"] },
+        { model: models.tb_lokasi, attributes: ["lokasi"] },
+        { model: models.tb_sk, attributes: ["skppkh"] },
+      ],
+      attributes: [
+        "id_verifiaction",
+        "id_tanaman",
+        "id_jenis",
+        "id_kegiatan",
+        "id_lokasi",
+        "id_sk",
+        "id_status",
+        "diameter",
+        "tinggi",
+        "tanggal_tanam",
+        "date_modified",
+        "latitude",
+        "longitude",
+        "elevasi",
+        "easting",
+        "northing",
+        "images",
+        "id_Action",
+        "uid",
+      ],
+      order: [
+        // Menentukan pengurutan berdasarkan parameter yang diberikan
+        [orderBy, sort],
+      ],
+    })
     .then((result) => {
       res.status(200).json({
         message: "Get All History Successfully",
-        post: result,
+        data: result,
       });
     })
     .catch((error) => {
       res.status(500).json({
         message: "Something went wrong",
-        error: error,
+        error: error.message,
       });
     });
 }
@@ -97,14 +129,49 @@ function searchHistory(req, res) {
   // Contoh query pencarian dengan Sequelize
   models.tb_approve
     .findAll({
-      where: {
-        // Menggunakan operator LIKE untuk mencocokkan kata kunci dengan kolom tertentu
-        [Sequelize.Op.or]: [
-          { id_jenis: { [Sequelize.Op.like]: `%${keyword}%` } },
-          { id_kegiatan: { [Sequelize.Op.like]: `%${keyword}%` } },
-          // Tambahkan kolom-kolom lain yang ingin dijadikan kriteria pencarian
-        ],
-      },
+      include: [
+        // Menggunakan objek include untuk melakukan join dengan tabel-tabel lain
+        {
+          model: models.tb_jenis, // Model yang ingin di-join
+          attributes: ["nama"], // Kolom yang ingin dipilih dari tabel join
+          where: {
+            nama: { [Sequelize.Op.like]: `%${keyword}%` }, // Kondisi pencarian
+          },
+          required: true, // Menggunakan inner join agar hanya data yang cocok yang diambil
+        },
+        {
+          model: models.tb_verification,
+          attributes: ["id_tanaman"],
+          where: {
+            id_tanaman: { [Sequelize.Op.like]: `%${keyword}%` },
+          },
+          required: true,
+        },
+        {
+          model: models.tb_kegiatan,
+          attributes: ["kegiatan"],
+          where: {
+            kegiatan: { [Sequelize.Op.like]: `%${keyword}%` },
+          },
+          required: true,
+        },
+        {
+          model: models.tb_lokasi,
+          attributes: ["lokasi"],
+          where: {
+            lokasi: { [Sequelize.Op.like]: `%${keyword}%` },
+          },
+          required: true,
+        },
+        {
+          model: models.tb_sk,
+          attributes: ["skppkh"],
+          where: {
+            skppkh: { [Sequelize.Op.like]: `%${keyword}%` },
+          },
+          required: true,
+        },
+      ],
       order: [
         // Mengatur pengurutan dan order by berdasarkan parameter yang diberikan
         [sortBy, orderBy],
