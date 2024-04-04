@@ -71,7 +71,7 @@ function createNewTag(req, res) {
 }
 
 function getAllTag(req, res) {
-  models.tb_tanaman
+  models.tb_approve
     .findAll({
       include: [
         { model: models.tb_jenis, attributes: ["nama"] },
