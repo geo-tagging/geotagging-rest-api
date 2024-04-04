@@ -95,14 +95,41 @@ function searchTags(req, res) {
   // Contoh query pencarian dengan Sequelize
   models.tb_approve
     .findAll({
-      where: {
-        // Menggunakan operator LIKE untuk mencocokkan kata kunci dengan kolom tertentu
-        [Sequelize.Op.or]: [
-          { id_jenis: { [Sequelize.Op.like]: `%${keyword}%` } },
-          { id_kegiatan: { [Sequelize.Op.like]: `%${keyword}%` } },
-          // Tambahkan kolom-kolom lain yang ingin dijadikan kriteria pencarian
-        ],
-      },
+      include: [
+        // Menggunakan objek include untuk melakukan join dengan tabel-tabel lain
+        {
+          model: models.tb_jenis, // Model yang ingin di-join
+          attributes: ["nama"], // Kolom yang ingin dipilih dari tabel join
+          where: {
+            nama: { [Sequelize.Op.like]: `%${keyword}%` }, // Kondisi pencarian
+          },
+          required: true, // Menggunakan inner join agar hanya data yang cocok yang diambil
+        },
+        {
+          model: models.tb_kegiatan,
+          attributes: ["kegiatan"],
+          where: {
+            kegiatan: { [Sequelize.Op.like]: `%${keyword}%` },
+          },
+          required: true,
+        },
+        {
+          model: models.tb_lokasi,
+          attributes: ["lokasi"],
+          where: {
+            lokasi: { [Sequelize.Op.like]: `%${keyword}%` },
+          },
+          required: true,
+        },
+        {
+          model: models.tb_sk,
+          attributes: ["skppkh"],
+          where: {
+            skppkh: { [Sequelize.Op.like]: `%${keyword}%` },
+          },
+          required: true,
+        },
+      ],
       order: [
         // Mengatur pengurutan dan order by berdasarkan parameter yang diberikan
         [sortBy, orderBy],
