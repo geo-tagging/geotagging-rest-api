@@ -206,10 +206,25 @@ function editVerificationAction(req, res) {
     .findByPk(id_verification)
     .then((verification) => {
       if (!verification) {
-        return res.status(404).json({
+        return res.status(400).json({
           message: "Verification not found",
         });
       }
+
+      // Update id_action pada data verifikasi
+      verification
+        .update({ id_action: newIdAction })
+        .then(() => {
+          return res.status(200).json({
+            message: "Verification data successfully",
+          });
+        })
+        .catch((error) => {
+          return res.status(400).json({
+            message: "Failed to verification data",
+            error: error,
+          });
+        });
 
       // Jika id_action diubah menjadi 2 (approved)
       if (newIdAction === 2) {
@@ -219,66 +234,19 @@ function editVerificationAction(req, res) {
           .then((existingApprove) => {
             if (!existingApprove) {
               // Jika tidak ada, tambahkan ke tb_approve
-              models.tb_approve
-                .create(verification.dataValues)
-                .then(() => {
-                  res.status(200).json({
-                    message: "Data has been verified!",
-                  });
-                })
-                .catch((error) => {
-                  res.status(400).json({
-                    message: "Failed to input data to tb_approve",
-                    error: error,
-                  });
-                });
+              models.tb_approve.create(verification.dataValues);
             } else {
               // Jika sudah ada, lakukan pembaruan (update)
-              existingApprove
-                .update(verification.dataValues)
-                .then(() => {
-                  res.status(200).json({
-                    message: "Data has been updated!",
-                  });
-                })
-                .catch((error) => {
-                  res.status(400).json({
-                    message: "Failed to update data to tb_approve",
-                    error: error,
-                  });
-                });
+              existingApprove.update(verification.dataValues);
             }
-          })
-          .catch((error) => {
-            res.status(400).json({
-              message: "Failed to find data",
-              error: error,
-            });
           });
       } else if (newIdAction === 3) {
         // Jika id_action diubah menjadi 3 (rejected)
-        res.status(200).json({
-          message: "Data rejected, no action taken",
-        });
+        // Tidak memberikan respons
       }
-
-      // Update id_action pada data verifikasi
-      verification
-        .update({ id_action: newIdAction })
-        .then(() => {
-          res.status(200).json({
-            message: "Verification updated successfully",
-          });
-        })
-        .catch((error) => {
-          res.status(400).json({
-            message: "Failed to update verification",
-            error: error,
-          });
-        });
     })
     .catch((error) => {
-      res.status(500).json({
+      return res.status(500).json({
         message: "Something went wrong",
         error: error.message,
       });
