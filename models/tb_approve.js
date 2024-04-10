@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      tb_approve.hasMany(models.tb_verification, { foreignKey: "id_tanaman" });
       tb_approve.belongsTo(models.tb_jenis, { foreignKey: "id_jenis" });
       tb_approve.belongsTo(models.tb_kegiatan, {
         foreignKey: "id_kegiatan",
