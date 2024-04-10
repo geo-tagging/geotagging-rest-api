@@ -245,7 +245,7 @@ function searchTags(req, res) {
     })
     .then((result) => {
       res.status(200).json({
-        message: "Get All Tag Successfully",
+        message: "Search Result",
         data: result,
       });
     })
