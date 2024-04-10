@@ -71,21 +71,23 @@ function createNewTag(req, res) {
 }
 
 function getAllTag(req, res) {
+  const orderBy = req.query.orderBy;
+  const sortBy = req.query.sortBy;
+
   models.tb_approve
     .findAll({
-      include: [
-        { model: models.tb_jenis, attributes: ["nama"] },
-        { model: models.tb_kegiatan, attributes: ["kegiatan"] },
-        { model: models.tb_lokasi, attributes: ["lokasi"] },
-        { model: models.tb_sk, attributes: ["skppkh"] },
-      ],
       attributes: [
         "id_tanaman",
         "id_jenis",
+        [Sequelize.col("tb_jeni.nama"), "nama"],
         "id_kegiatan",
+        [Sequelize.col("tb_kegiatan.kegiatan"), "kegiatan"], // Perbaiki alias untuk kolom kegiatan
         "id_lokasi",
+        [Sequelize.col("tb_lokasi.lokasi"), "lokasi"], // Perbaiki alias untuk kolom lokasi
         "id_sk",
+        [Sequelize.col("tb_sk.skppkh"), "skppkh"], // Perbaiki alias untuk kolom skppkh
         "id_status",
+        [Sequelize.col("tb_status.status"), "status"], // Perbaiki alias untuk kolom status
         "diameter",
         "tinggi",
         "tanggal_tanam",
@@ -96,13 +98,42 @@ function getAllTag(req, res) {
         "easting",
         "northing",
         "images",
-        "id_Action",
+        "id_action",
+        [Sequelize.col("tb_action.action"), "action"], // Perbaiki alias untuk kolom action
         "uid",
+        [Sequelize.col("tb_user.username"), "username"], // Perbaiki alias untuk kolom username
       ],
-      order: [
-        // Menentukan pengurutan berdasarkan parameter yang diberikan
-        [orderBy, sort],
+      include: [
+        {
+          model: models.tb_jenis,
+          attributes: [],
+        },
+        {
+          model: models.tb_kegiatan,
+          attributes: [],
+        },
+        {
+          model: models.tb_lokasi,
+          attributes: [],
+        },
+        {
+          model: models.tb_sk,
+          attributes: [],
+        },
+        {
+          model: models.tb_status,
+          attributes: [],
+        },
+        {
+          model: models.tb_action,
+          attributes: [],
+        },
+        {
+          model: models.tb_user,
+          attributes: [],
+        },
       ],
+      order: [[orderBy, sortBy]],
     })
     .then((result) => {
       res.status(200).json({
@@ -119,71 +150,109 @@ function getAllTag(req, res) {
 }
 
 function searchTags(req, res) {
-  const keyword = req.query.keyword; // Mengambil kata kunci dari query string
-  const sortBy = req.query.sortBy; // Mengambil parameter untuk mengurutkan
-  const orderBy = req.query.orderBy; // Mengambil parameter untuk order by
+  const orderBy = req.query.orderBy;
+  const sortBy = req.query.sortBy;
+  const keyword = req.query.keyword; // tambahkan parameter keyword
 
-  // Contoh query pencarian dengan Sequelize
   models.tb_approve
     .findAll({
+      attributes: [
+        "id_tanaman",
+        "id_jenis",
+        [Sequelize.col("tb_jeni.nama"), "nama"],
+        "id_kegiatan",
+        [Sequelize.col("tb_kegiatan.kegiatan"), "kegiatan"],
+        "id_lokasi",
+        [Sequelize.col("tb_lokasi.lokasi"), "lokasi"],
+        "id_sk",
+        [Sequelize.col("tb_sk.skppkh"), "skppkh"],
+        "id_status",
+        [Sequelize.col("tb_status.status"), "status"],
+        "diameter",
+        "tinggi",
+        "tanggal_tanam",
+        "date_modified",
+        "latitude",
+        "longitude",
+        "elevasi",
+        "easting",
+        "northing",
+        "images",
+        "id_action",
+        [Sequelize.col("tb_action.action"), "action"],
+        "uid",
+        [Sequelize.col("tb_user.username"), "username"],
+      ],
       include: [
-        // Menggunakan objek include untuk melakukan join dengan tabel-tabel lain
         {
-          model: models.tb_jenis, // Model yang ingin di-join
-          attributes: ["nama"], // Kolom yang ingin dipilih dari tabel join
-          where: {
-            nama: { [Sequelize.Op.like]: `%${keyword}%` }, // Kondisi pencarian
-          },
-          required: true, // Menggunakan inner join agar hanya data yang cocok yang diambil
-        },
-        {
-          model: models.tb_approve,
-          attributes: ["id_tanaman"],
-          where: {
-            id_tanaman: { [Sequelize.Op.like]: `%${keyword}%` },
-          },
-          required: true,
+          model: models.tb_jenis,
+          attributes: [],
         },
         {
           model: models.tb_kegiatan,
-          attributes: ["kegiatan"],
-          where: {
-            kegiatan: { [Sequelize.Op.like]: `%${keyword}%` },
-          },
-          required: true,
+          attributes: [],
         },
         {
           model: models.tb_lokasi,
-          attributes: ["lokasi"],
-          where: {
-            lokasi: { [Sequelize.Op.like]: `%${keyword}%` },
-          },
-          required: true,
+          attributes: [],
         },
         {
           model: models.tb_sk,
-          attributes: ["skppkh"],
-          where: {
-            skppkh: { [Sequelize.Op.like]: `%${keyword}%` },
-          },
-          required: true,
+          attributes: [],
+        },
+        {
+          model: models.tb_status,
+          attributes: [],
+        },
+        {
+          model: models.tb_action,
+          attributes: [],
+        },
+        {
+          model: models.tb_user,
+          attributes: [],
         },
       ],
-      order: [
-        // Mengatur pengurutan dan order by berdasarkan parameter yang diberikan
-        [sortBy, orderBy],
-      ],
+      where: {
+        [Sequelize.Op.or]: [
+          Sequelize.where(Sequelize.col("tb_jeni.nama"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
+          Sequelize.where(Sequelize.col("tb_kegiatan.kegiatan"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
+          Sequelize.where(Sequelize.col("tb_lokasi.lokasi"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
+          Sequelize.where(Sequelize.col("tb_sk.skppkh"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
+          Sequelize.where(Sequelize.col("tb_status.status"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
+          Sequelize.where(Sequelize.col("tb_action.action"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
+          Sequelize.where(Sequelize.col("tb_user.username"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
+          Sequelize.where(Sequelize.col("tanggal_tanam"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
+        ],
+      },
+      order: [[orderBy, sortBy]],
     })
     .then((result) => {
       res.status(200).json({
-        message: "Search results",
+        message: "Get All Tag Successfully",
         data: result,
       });
     })
     .catch((error) => {
       res.status(500).json({
         message: "Something went wrong",
-        error: error,
+        error: error.message,
       });
     });
 }
