@@ -81,13 +81,13 @@ function getAllTag(req, res) {
         "id_jenis",
         [Sequelize.col("tb_jeni.nama"), "nama"],
         "id_kegiatan",
-        [Sequelize.col("tb_kegiatan.kegiatan"), "kegiatan"], // Perbaiki alias untuk kolom kegiatan
+        [Sequelize.col("tb_kegiatan.kegiatan"), "kegiatan"],
         "id_lokasi",
-        [Sequelize.col("tb_lokasi.lokasi"), "lokasi"], // Perbaiki alias untuk kolom lokasi
+        [Sequelize.col("tb_lokasi.lokasi"), "lokasi"],
         "id_sk",
-        [Sequelize.col("tb_sk.skppkh"), "skppkh"], // Perbaiki alias untuk kolom skppkh
+        [Sequelize.col("tb_sk.skppkh"), "skppkh"],
         "id_status",
-        [Sequelize.col("tb_status.status"), "status"], // Perbaiki alias untuk kolom status
+        [Sequelize.col("tb_status.status"), "status"],
         "diameter",
         "tinggi",
         "tanggal_tanam",
@@ -99,9 +99,9 @@ function getAllTag(req, res) {
         "northing",
         "images",
         "id_action",
-        [Sequelize.col("tb_action.action"), "action"], // Perbaiki alias untuk kolom action
+        [Sequelize.col("tb_action.action"), "action"],
         "uid",
-        [Sequelize.col("tb_user.username"), "username"], // Perbaiki alias untuk kolom username
+        [Sequelize.col("tb_user.username"), "username"],
       ],
       include: [
         {
@@ -152,7 +152,7 @@ function getAllTag(req, res) {
 function searchTags(req, res) {
   const orderBy = req.query.orderBy;
   const sortBy = req.query.sortBy;
-  const keyword = req.query.keyword; // tambahkan parameter keyword
+  const keyword = req.query.keyword;
 
   models.tb_approve
     .findAll({

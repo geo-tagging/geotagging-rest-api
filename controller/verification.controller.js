@@ -84,13 +84,13 @@ function getAllHistory(req, res) {
         "id_jenis",
         [Sequelize.col("tb_jeni.nama"), "nama"],
         "id_kegiatan",
-        [Sequelize.col("tb_kegiatan.kegiatan"), "kegiatan"], // Perbaiki alias untuk kolom kegiatan
+        [Sequelize.col("tb_kegiatan.kegiatan"), "kegiatan"],
         "id_lokasi",
-        [Sequelize.col("tb_lokasi.lokasi"), "lokasi"], // Perbaiki alias untuk kolom lokasi
+        [Sequelize.col("tb_lokasi.lokasi"), "lokasi"],
         "id_sk",
-        [Sequelize.col("tb_sk.skppkh"), "skppkh"], // Perbaiki alias untuk kolom skppkh
+        [Sequelize.col("tb_sk.skppkh"), "skppkh"],
         "id_status",
-        [Sequelize.col("tb_status.status"), "status"], // Perbaiki alias untuk kolom status
+        [Sequelize.col("tb_status.status"), "status"],
         "diameter",
         "tinggi",
         "tanggal_tanam",
@@ -102,9 +102,9 @@ function getAllHistory(req, res) {
         "northing",
         "images",
         "id_action",
-        [Sequelize.col("tb_action.action"), "action"], // Perbaiki alias untuk kolom action
+        [Sequelize.col("tb_action.action"), "action"],
         "uid",
-        [Sequelize.col("tb_user.username"), "username"], // Perbaiki alias untuk kolom username
+        [Sequelize.col("tb_user.username"), "username"],
       ],
       include: [
         {
@@ -155,7 +155,7 @@ function getAllHistory(req, res) {
 function searchHistory(req, res) {
   const orderBy = req.query.orderBy;
   const sortBy = req.query.sortBy;
-  const keyword = req.query.keyword; // tambahkan parameter keyword
+  const keyword = req.query.keyword;
 
   models.tb_verification
     .findAll({
@@ -310,9 +310,6 @@ function editVerificationAction(req, res) {
               existingApprove.update(verification.dataValues);
             }
           });
-      } else if (newIdAction === 3) {
-        // Jika id_action diubah menjadi 3 (rejected)
-        // Tidak memberikan respons
       }
     })
     .catch((error) => {
