@@ -17,7 +17,7 @@ const userRoutes = require("./routes/user");
 const imageRoutes = require("./routes/image");
 
 app.use(bodyParser.json());
-app.use("/upload", express.static("upload"));
+app.use("/uploads", express.static("uploads"));
 
 app.use("/option", optionRoutes);
 app.use("/verification", verificationRoutes);
