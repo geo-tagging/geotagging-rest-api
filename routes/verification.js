@@ -6,26 +6,26 @@ const router = express.Router();
 
 router.post(
   "/",
-  checkAuthMiddleware.checkAuth,
+  // checkAuthMiddleware.checkAuth,
   imageUploader.upload.single("image"),
   verificationController.createNewVerification
 );
 
 router.get(
   "/tag",
-  checkAuthMiddleware.checkAuth,
+  // checkAuthMiddleware.checkAuth,
   verificationController.getAllHistory
 );
 
 router.get(
   "/search",
-  checkAuthMiddleware.checkAuth,
+  // checkAuthMiddleware.checkAuth,
   verificationController.searchHistory
 );
 
 router.patch(
   "/:id_verification",
-  checkAuthMiddleware.checkAuth,
+  // checkAuthMiddleware.checkAuth,
   verificationController.editVerificationAction
 );
 
