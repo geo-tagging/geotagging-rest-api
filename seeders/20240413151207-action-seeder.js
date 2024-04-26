@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert("action", [
+    return queryInterface.bulkInsert("tb_action", [
       {
         action: "Unverified",
       },
@@ -23,6 +23,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("action", {}, null);
+    return queryInterface.bulkDelete("tb_action", {}, null);
   },
 };

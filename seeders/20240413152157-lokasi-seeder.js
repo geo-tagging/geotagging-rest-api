@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert("lokasi", [
+    return queryInterface.bulkInsert("tb_lokasi", [
       {
         lokasi: "Body River Katal-katal",
       },
@@ -83,6 +83,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("lokasi", {}, null);
+    return queryInterface.bulkDelete("tb_lokasi", {}, null);
   },
 };

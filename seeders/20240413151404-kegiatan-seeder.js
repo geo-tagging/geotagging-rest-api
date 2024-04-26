@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert("kegiatan", [
+    return queryInterface.bulkInsert("tb_kegiatan", [
       {
         kegiatan: "Tanaman baru",
       },
@@ -20,6 +20,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("kegiatan", {}, null);
+    return queryInterface.bulkDelete("tb_kegiatan", {}, null);
   },
 };

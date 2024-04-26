@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert("jenis", [
+    return queryInterface.bulkInsert("tb_jenis", [
       {
         nama: "Alaban",
         kategori: "Local",
@@ -208,6 +208,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("jenis", {}, null);
+    return queryInterface.bulkDelete("tb_jenis", {}, null);
   },
 };
