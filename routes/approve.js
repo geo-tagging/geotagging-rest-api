@@ -15,7 +15,7 @@ router.get("/tag", checkAuthMiddleware.checkAuth, aproveController.getAllTag);
 
 router.get(
   "/search",
-  checkAuthMiddleware.checkAuth,
+  // checkAuthMiddleware.checkAuth,
   aproveController.searchTags
 );
 

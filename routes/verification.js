@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post(
   "/",
-  checkAuthMiddleware.checkAuth,
+  // checkAuthMiddleware.checkAuth,
   imageUploader.upload.single("image"),
   verificationController.createNewVerification
 );
