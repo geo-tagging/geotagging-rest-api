@@ -9,7 +9,15 @@ module.exports = {
         kategori: "Local",
       },
       {
+        nama: "Alpukat",
+        kategori: "Local",
+      },
+      {
         nama: "Ambaratan",
+        kategori: "Local",
+      },
+      {
+        nama: "Angsana",
         kategori: "Local",
       },
       {
@@ -17,11 +25,99 @@ module.exports = {
         kategori: "Local",
       },
       {
+        nama: "Bakau",
+        kategori: "Local",
+      },
+      {
+        nama: "Bangkal",
+        kategori: "Local",
+      },
+      {
+        nama: "Bangkirai",
+        kategori: "Local",
+      },
+      {
+        nama: "Belangiran",
+        kategori: "Local",
+      },
+      {
+        nama: "Binuang Laki",
+        kategori: "Local",
+      },
+      {
+        nama: "Bungur",
+        kategori: "Local",
+      },
+      {
+        nama: "Cemara",
+        kategori: "Local",
+      },
+      {
         nama: "Cempedak",
         kategori: "Local",
       },
       {
+        nama: "Damar",
+        kategori: "Local",
+      },
+      {
+        nama: "Duabanga",
+        kategori: "Local",
+      },
+      {
+        nama: "Durian",
+        kategori: "Local",
+      },
+      {
+        nama: "Ficus/Beringin",
+        kategori: "Local",
+      },
+      {
+        nama: "Gaharu",
+        kategori: "Local",
+      },
+      {
+        nama: "Galam",
+        kategori: "Local",
+      },
+      {
+        nama: "Gempol",
+        kategori: "Local",
+      },
+      {
+        nama: "Glodokan Tiang",
+        kategori: "Local",
+      },
+      {
         nama: "Jabon",
+        kategori: "Local",
+      },
+      {
+        nama: "Jambu Batu",
+        kategori: "Local",
+      },
+      {
+        nama: "Jambu Biji",
+        kategori: "Local",
+      },
+      {
+        nama: "Jambu Mete",
+        kategori: "Local",
+      },
+      {
+        nama: "Jengkol",
+        kategori: "Local",
+      },
+      {
+        nama: "Jeruk",
+        kategori: "Local",
+      },
+      {
+        nama: "Kalang Kala",
+        kategori: "Local",
+      },
+      {
+        nama: "Kaliandra",
         kategori: "Local",
       },
       {
@@ -65,6 +161,10 @@ module.exports = {
         kategori: "Local",
       },
       {
+        nama: "Ketapi",
+        kategori: "Local",
+      },
+      {
         nama: "Lamtoro",
         kategori: "Local",
       },
@@ -81,7 +181,15 @@ module.exports = {
         kategori: "Local",
       },
       {
+        nama: "Mahoni",
+        kategori: "Local",
+      },
+      {
         nama: "Mallotus",
+        kategori: "Local",
+      },
+      {
+        nama: "Mangga",
         kategori: "Local",
       },
       {
@@ -94,6 +202,10 @@ module.exports = {
       },
       {
         nama: "Nangka",
+        kategori: "Local",
+      },
+      {
+        nama: "Nyamplung",
         kategori: "Local",
       },
       {
@@ -117,7 +229,15 @@ module.exports = {
         kategori: "Local",
       },
       {
+        nama: "Rambutan",
+        kategori: "Local",
+      },
+      {
         nama: "Rotan",
+        kategori: "Local",
+      },
+      {
+        nama: "Sirsak",
         kategori: "Local",
       },
       {
@@ -152,16 +272,29 @@ module.exports = {
         nama: "Ylang-ylang",
         kategori: "Local",
       },
+
       {
         nama: "Akasia",
         kategori: "Non Local",
       },
       {
-        nama: "Alpukat",
+        nama: "Belimbing",
         kategori: "Non Local",
       },
       {
-        nama: "Angsana",
+        nama: "Eucaliptus",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Gamal",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Gmelina",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Gulinggang",
         kategori: "Non Local",
       },
       {
@@ -169,7 +302,43 @@ module.exports = {
         kategori: "Non Local",
       },
       {
-        nama: "Mahoni",
+        nama: "Jerpay",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Johar",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Kapuk",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Karet",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Kesambi",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Ketapang",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Mucuna cochincinesis",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Pepaya",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Pinang",
+        kategori: "Non Local",
+      },
+      {
+        nama: "Rumput Tifa",
         kategori: "Non Local",
       },
       {
@@ -190,10 +359,6 @@ module.exports = {
       },
       {
         nama: "Sereh Wangi",
-        kategori: "Non Local",
-      },
-      {
-        nama: "Sirsak",
         kategori: "Non Local",
       },
       {
