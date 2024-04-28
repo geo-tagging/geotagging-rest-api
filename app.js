@@ -15,6 +15,7 @@ const verificationRoutes = require("./routes/verification");
 const approveRoutes = require("./routes/approve");
 const userRoutes = require("./routes/user");
 const imageRoutes = require("./routes/image");
+const counterRoutes = require("./routes/counter");
 
 app.use(bodyParser.json());
 app.use("/uploads", express.static("uploads"));
@@ -24,5 +25,7 @@ app.use("/verification", verificationRoutes);
 app.use("/approve", approveRoutes);
 app.use("/user", userRoutes);
 app.use("/image", imageRoutes);
+
+app.use("/counter", counterRoutes);
 
 module.exports = app;
