@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       id_tanaman: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: false,
       },
       id_jenis: DataTypes.INTEGER,
       id_kegiatan: DataTypes.INTEGER,
