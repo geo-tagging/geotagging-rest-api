@@ -9,7 +9,10 @@ function getCounter(req, res) {
     .findByPk(id)
     .then((result) => {
       if (result) {
-        res.status(200).json(result);
+        res.status(200).json({
+          message: "Get counter Successfully",
+          data: result,
+        });
       } else {
         res.status(404).json({
           message: "counter not found!",
