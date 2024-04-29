@@ -1,4 +1,4 @@
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 
 let config = {
   username: process.env.DB_USERNAME,
