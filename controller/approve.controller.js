@@ -149,6 +149,89 @@ function getAllTag(req, res) {
     });
 }
 
+function getTagId(req, res) {
+  const id_tanaman = req.params.id_tanaman;
+
+  models.tb_approve
+    .findByPk(id_tanaman, {
+      attributes: [
+        "id_tanaman",
+        "id_jenis",
+        [Sequelize.col("tb_jeni.nama"), "nama"],
+        "id_kegiatan",
+        [Sequelize.col("tb_kegiatan.kegiatan"), "kegiatan"],
+        "id_lokasi",
+        [Sequelize.col("tb_lokasi.lokasi"), "lokasi"],
+        "id_sk",
+        [Sequelize.col("tb_sk.skppkh"), "skppkh"],
+        "id_status",
+        [Sequelize.col("tb_status.status"), "status"],
+        "diameter",
+        "tinggi",
+        "tanggal_tanam",
+        "date_modified",
+        "latitude",
+        "longitude",
+        "elevasi",
+        "easting",
+        "northing",
+        "images",
+        "id_action",
+        [Sequelize.col("tb_action.action"), "action"],
+        "uid",
+        [Sequelize.col("tb_user.username"), "username"],
+      ],
+      include: [
+        {
+          model: models.tb_jenis,
+          attributes: [],
+        },
+        {
+          model: models.tb_kegiatan,
+          attributes: [],
+        },
+        {
+          model: models.tb_lokasi,
+          attributes: [],
+        },
+        {
+          model: models.tb_sk,
+          attributes: [],
+        },
+        {
+          model: models.tb_status,
+          attributes: [],
+        },
+        {
+          model: models.tb_action,
+          attributes: [],
+        },
+        {
+          model: models.tb_user,
+          attributes: [],
+        },
+      ],
+    })
+    .then((result) => {
+      if (result) {
+        res.status(200).json({
+          message: "Get Tag Successfully",
+          data: result,
+        });
+      } else {
+        res.status(404).json({
+          message: "Tag not found!",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Something went wrong",
+        error: error.message,
+      });
+    });
+}
+
 function searchTags(req, res) {
   const orderBy = req.query.orderBy;
   const sortBy = req.query.sortBy;
@@ -371,6 +454,7 @@ function deleteTag(req, res) {
 module.exports = {
   createNewTag,
   getAllTag,
+  getTagId,
   searchTags,
   updateTag,
   deleteTag,

@@ -11,9 +11,17 @@ router.post(
   aproveController.createNewTag
 );
 
-router.get("/tag", 
-// checkAuthMiddleware.checkAuth, 
-aproveController.getAllTag);
+router.get(
+  "/tag",
+  // checkAuthMiddleware.checkAuth,
+  aproveController.getAllTag
+);
+
+router.get(
+  "/tag/:id_tanaman",
+  // checkAuthMiddleware.checkAuth,
+  aproveController.getTagId
+);
 
 router.get(
   "/search",
