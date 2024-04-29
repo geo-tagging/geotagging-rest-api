@@ -148,8 +148,37 @@ function loginAdmin(req, res) {
     });
 }
 
+function deleteUser(req, res) {
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ message: "Only admin can delete users" });
+  }
+
+  const userIdToDelete = req.params.uid;
+
+  models.tb_user
+    .destroy({ where: { uid: userIdToDelete } })
+    .then((result) => {
+      if (result === 1) {
+        res.status(200).json({
+          message: "User deleted successfully",
+        });
+      } else {
+        res.status(404).json({
+          message: "User not found",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Something went wrong!",
+      });
+    });
+}
+
 module.exports = {
   signUp,
   loginUser,
   loginAdmin,
+  deleteUser,
 };
