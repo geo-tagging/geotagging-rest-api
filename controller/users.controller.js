@@ -18,6 +18,7 @@ function signUp(req, res) {
               email: req.body.email,
               username: req.body.username,
               password: hash,
+              role: req.body.role,
             };
 
             models.tb_user
@@ -45,7 +46,7 @@ function signUp(req, res) {
     });
 }
 
-function login(req, res) {
+function loginUser(req, res) {
   models.tb_user
     .findOne({ where: { email: req.body.email } })
     .then((user) => {
@@ -63,13 +64,71 @@ function login(req, res) {
                 {
                   email: user.email,
                   uid: user.uid,
+                  role: user.role,
                 },
                 process.env.JWT_KEY,
                 function (err, token) {
-                  res.status(200).json({
-                    message: "Authentication successfull!",
-                    token: token,
-                  });
+                  if (user.role === "admin") {
+                    res.status(403).json({
+                      message: "Admin login not allowed here!",
+                    });
+                  } else {
+                    res.status(200).json({
+                      message: "User authentication successful!",
+                      token: token,
+                    });
+                  }
+                }
+              );
+            } else {
+              res.status(401).json({
+                message: "Invalid credentials!",
+              });
+            }
+          }
+        );
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Something went wrong!",
+      });
+    });
+}
+
+function loginAdmin(req, res) {
+  models.tb_user
+    .findOne({ where: { email: req.body.email } })
+    .then((user) => {
+      if (user === null) {
+        res.status(401).json({
+          message: "Invalid credentials!",
+        });
+      } else {
+        bcryptjs.compare(
+          req.body.password,
+          user.password,
+          function (err, result) {
+            if (result) {
+              const token = jwt.sign(
+                {
+                  email: user.email,
+                  uid: user.uid,
+                  role: user.role,
+                },
+                process.env.JWT_KEY,
+                function (err, token) {
+                  if (user.role === "admin") {
+                    res.status(200).json({
+                      message: "Admin authentication successful!",
+                      token: token,
+                    });
+                  } else {
+                    res.status(403).json({
+                      message: "User login not allowed here!",
+                    });
+                  }
                 }
               );
             } else {
@@ -91,5 +150,6 @@ function login(req, res) {
 
 module.exports = {
   signUp,
-  login,
+  loginUser,
+  loginAdmin,
 };
