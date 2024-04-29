@@ -5,7 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert("tb_counters", [
       {
-        count: 1,
+        count: 0,
       },
     ]);
   },
