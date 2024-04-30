@@ -1,5 +1,5 @@
 function upload(req, res) {
-  if (req.file.filename) {
+  if (req.file) {
     res.status(201).json({
       message: "Image upload successfully",
       url: req.file.filename,
