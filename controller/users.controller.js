@@ -76,6 +76,7 @@ function loginUser(req, res) {
                     res.status(200).json({
                       message: "User authentication successful!",
                       token: token,
+                      uid: user.uid,
                     });
                   }
                 }
@@ -123,6 +124,7 @@ function loginAdmin(req, res) {
                     res.status(200).json({
                       message: "Admin authentication successful!",
                       token: token,
+                      uid: user.uid,
                     });
                   } else {
                     res.status(403).json({
