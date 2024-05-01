@@ -67,6 +67,9 @@ function loginUser(req, res) {
                   role: user.role,
                 },
                 process.env.JWT_KEY,
+                {
+                  expiresIn: "3d", // Token kedaluwarsa setelah 3 hari
+                },
                 function (err, token) {
                   if (user.role === "admin") {
                     res.status(403).json({
@@ -119,6 +122,9 @@ function loginAdmin(req, res) {
                   role: user.role,
                 },
                 process.env.JWT_KEY,
+                {
+                  expiresIn: "3d", // Token kedaluwarsa setelah 3 hari
+                },
                 function (err, token) {
                   if (user.role === "admin") {
                     res.status(200).json({
@@ -150,8 +156,35 @@ function loginAdmin(req, res) {
     });
 }
 
+function getAllUsers(req, res) {
+  if (req.userData.role !== "admin") {
+    return res.status(403).json({ message: "Unauthorized access" });
+  }
+
+  models.tb_user
+    .findAll()
+    .then((user) => {
+      if (user.length === 0) {
+        res.status(404).json({
+          message: "No users found",
+        });
+      } else {
+        res.status(200).json({
+          message: "Users retrieved successfully",
+          user: user,
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Something went wrong!",
+      });
+    });
+}
+
 function deleteUser(req, res) {
-  if (req.user.role !== "admin") {
+  if (req.userData.role !== "admin") {
     return res.status(403).json({ message: "Only admin can delete users" });
   }
 
@@ -182,5 +215,6 @@ module.exports = {
   signUp,
   loginUser,
   loginAdmin,
+  getAllUsers,
   deleteUser,
 };

@@ -8,10 +8,18 @@ function checkAuth(req, res, next) {
     req.userData = decodeToken;
     next();
   } catch (error) {
-    return res.status(401).json({
-      message: "Invalid or expired token provided!",
-      error: error,
-    });
+    if (error.name === "TokenExpiredError") {
+      // Token expired
+      return res.status(401).json({
+        message: "Session expired, please login again",
+      });
+    } else {
+      // Other token validation errors
+      return res.status(401).json({
+        message: "Invalid token provided!",
+        error: error,
+      });
+    }
   }
 }
 
