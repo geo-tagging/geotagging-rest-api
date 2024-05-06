@@ -29,13 +29,13 @@ router.get(
 
 router.patch(
   "/:id_tanaman",
-  // checkAuthMiddleware.checkAuth,
+  checkAuthMiddleware.checkAuth,
   aproveController.updateTag
 );
 
 router.delete(
   "/:id_tanaman",
-  // checkAuthMiddleware.checkAuth,
+  checkAuthMiddleware.checkAuth,
   aproveController.deleteTag
 );
 

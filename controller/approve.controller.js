@@ -345,9 +345,10 @@ function searchTags(req, res) {
 
 function updateTag(req, res) {
   const id_tanaman = req.params.id_tanaman;
-  const uid = 1;
+  const uid = req.userData.uid;
+  const role = req.userData.role;
 
-  if (uid !== 1) {
+  if (role !== "admin") {
     return res.status(403).json({
       message: "Unauthorized account!",
     });
@@ -437,8 +438,14 @@ function updateTag(req, res) {
 
 function deleteTag(req, res) {
   const id_tanaman = req.params.id_tanaman;
-  const uid = 1;
+  const uid = req.userData.uid;
+  const role = req.userData.role;
 
+  if (role !== "admin") {
+    return res.status(403).json({
+      message: "Unauthorized account!",
+    });
+  }
   models.tb_approve
     .destroy({ where: { id_tanaman: id_tanaman, uid: uid } })
     .then((result) => {
