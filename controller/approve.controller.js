@@ -301,6 +301,9 @@ function searchTags(req, res) {
       ],
       where: {
         [Sequelize.Op.or]: [
+          Sequelize.where(Sequelize.col("id_tanaman"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
           Sequelize.where(Sequelize.col("tb_jeni.nama"), {
             [Sequelize.Op.like]: `%${keyword}%`,
           }),
