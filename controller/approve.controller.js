@@ -408,7 +408,7 @@ function updateTag(req, res) {
   }
 
   models.tb_approve
-    .findOne({ where: { id_tanaman: id_tanaman, uid: uid } })
+    .findOne({ where: { id_tanaman: id_tanaman } })
     .then((tag) => {
       if (!tag) {
         return res.status(404).json({
@@ -441,7 +441,6 @@ function updateTag(req, res) {
 
 function deleteTag(req, res) {
   const id_tanaman = req.params.id_tanaman;
-  const uid = req.userData.uid;
   const role = req.userData.role;
 
   if (role !== "admin") {
@@ -450,7 +449,7 @@ function deleteTag(req, res) {
     });
   }
   models.tb_approve
-    .destroy({ where: { id_tanaman: id_tanaman, uid: uid } })
+    .destroy({ where: { id_tanaman: id_tanaman } })
     .then((result) => {
       res.status(200).json({
         message: "Post deleted successfully",
