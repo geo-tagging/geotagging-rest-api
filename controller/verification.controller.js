@@ -269,6 +269,7 @@ function searchHistory(req, res) {
 function editVerificationAction(req, res) {
   const id_verification = req.params.id_verification;
   const newIdAction = req.body.id_action;
+  const newDateModified = req.body.date_modified;
 
   // Validasi id_action
   if (![1, 2, 3, 4].includes(newIdAction)) {
@@ -288,7 +289,7 @@ function editVerificationAction(req, res) {
 
       // Update id_action pada data verifikasi
       verification
-        .update({ id_action: newIdAction })
+        .update({ id_action: newIdAction, date_modified: newDateModified })
         .then(() => {
           return res.status(200).json({
             message: "Verification data successfully",
