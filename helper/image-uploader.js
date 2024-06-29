@@ -1,30 +1,53 @@
-const multer = require("multer");
-const path = require("path");
+// helper/gcs-uploader.js
+const { Storage } = require("@google-cloud/storage");
+const Multer = require("multer");
+const config = require("../config/config");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads");
-  },
+const storage = new Storage({
+  projectId: config.development.gcp.projectId, // Use the config
+  keyFilename: config.development.gcp.keyFilename, // Use the config
+});
 
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
+const bucket = storage.bucket(config.development.gcp.bucketName); // Use the config
+
+const multer = Multer({
+  storage: Multer.memoryStorage(), // Menggunakan penyimpanan memori
+  limits: {
+    fileSize: 1024 * 1024 * 2, // Batas ukuran file 2MB
   },
 });
 
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-    cb(null, true);
-  } else {
-    cb(new Error("Unsupport files"), false);
-  }
+const uploadImageToGCS = (file) => {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      reject("No image file provided");
+      return;
+    }
+
+    const blob = bucket.file(file.originalname);
+    const blobStream = blob.createWriteStream({
+      resumable: false,
+    });
+
+    blobStream.on("error", (err) => {
+      reject(err);
+    });
+
+    blobStream.on("finish", () => {
+      const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+      resolve(publicUrl);
+    });
+
+    blobStream.end(file.buffer);
+  });
 };
 
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1024 * 1024 * 2 },
-  fileFilter: fileFilter,
-});
+const getImageFromGCS = (fileName) => {
+  return bucket.file(fileName).createReadStream();
+};
 
 module.exports = {
-  upload,
+  multer,
+  uploadImageToGCS,
+  getImageFromGCS,
 };

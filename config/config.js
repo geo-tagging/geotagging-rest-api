@@ -6,6 +6,11 @@ let config = {
   database: process.env.DB_NAME,
   host: process.env.DB_HOST,
   dialect: "mysql",
+  gcp: {
+    projectId: process.env.GCP_PROJECT_ID,
+    keyFilename: process.env.GCP_KEYFILE_PATH,
+    bucketName: process.env.GCS_BUCKET_NAME,
+  },
 };
 
 module.exports = {

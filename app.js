@@ -1,3 +1,4 @@
+// app.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -18,14 +19,12 @@ const imageRoutes = require("./routes/image");
 const counterRoutes = require("./routes/counter");
 
 app.use(bodyParser.json());
-app.use("/uploads", express.static("uploads"));
 
 app.use("/option", optionRoutes);
 app.use("/verification", verificationRoutes);
 app.use("/approve", approveRoutes);
 app.use("/user", userRoutes);
 app.use("/image", imageRoutes);
-
 app.use("/counter", counterRoutes);
 
 module.exports = app;
