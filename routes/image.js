@@ -7,14 +7,14 @@ const router = express.Router();
 
 router.post(
   "/uploads",
-  // checkAuthMiddleware.checkAuth,
+  checkAuthMiddleware.checkAuth,
   gcsUploader.multer.single("image"),
   imageController.upload
 );
 
 router.get(
   "/uploads/:filename",
-  // checkAuthMiddleware.checkAuth,
+  checkAuthMiddleware.checkAuth,
   imageController.getImage
 );
 

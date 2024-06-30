@@ -3,27 +3,19 @@ const aproveController = require("../controller/approve.controller");
 const checkAuthMiddleware = require("../middleware/check-auth");
 const router = express.Router();
 
-router.post(
-  "/",
-  // checkAuthMiddleware.checkAuth,
-  aproveController.createNewTag
-);
+router.post("/", checkAuthMiddleware.checkAuth, aproveController.createNewTag);
 
-router.get(
-  "/tag",
-  // checkAuthMiddleware.checkAuth,
-  aproveController.getAllTag
-);
+router.get("/tag", checkAuthMiddleware.checkAuth, aproveController.getAllTag);
 
 router.get(
   "/tag/:id_tanaman",
-  // checkAuthMiddleware.checkAuth,
+  checkAuthMiddleware.checkAuth,
   aproveController.getTagId
 );
 
 router.get(
   "/search",
-  // checkAuthMiddleware.checkAuth,
+  checkAuthMiddleware.checkAuth,
   aproveController.searchTags
 );
 

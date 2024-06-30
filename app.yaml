@@ -1,0 +1,29 @@
+runtime: nodejs18
+
+entrypoint: npm start
+
+instance_class: F1
+
+liveness_check:
+  path: "/"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+
+readiness_check:
+  path: "/"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  target_throughput_utilization: 0.75
+  min_instances: 1
+  max_instances: 5
+
+handlers:
+  - url: /.* # Route all requests to your nodejs app
+    script: auto
