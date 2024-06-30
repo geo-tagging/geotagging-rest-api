@@ -1,4 +1,3 @@
-// app.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -20,11 +19,11 @@ const counterRoutes = require("./routes/counter");
 
 app.use(bodyParser.json());
 
-app.use("/option", optionRoutes);
-app.use("/verification", verificationRoutes);
-app.use("/approve", approveRoutes);
-app.use("/user", userRoutes);
-app.use("/image", imageRoutes);
-app.use("/counter", counterRoutes);
+app.use("/api/option", optionRoutes);
+app.use("/api/verification", verificationRoutes);
+app.use("/api/approve", approveRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/image", imageRoutes);
+app.use("/api/counter", counterRoutes);
 
 module.exports = app;
