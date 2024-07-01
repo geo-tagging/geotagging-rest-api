@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post(
   "/sign-up",
-  // checkAuthMiddleware.checkAuth,
+  checkAuthMiddleware.checkAuth,
   userController.signUp
 );
 
