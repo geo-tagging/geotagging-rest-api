@@ -71,7 +71,7 @@ function loginUser(req, res) {
                   expiresIn: "3d", // Token kedaluwarsa setelah 3 hari
                 },
                 function (err, token) {
-                  if (user.role === "admin") {
+                  if (user.role === "admin" || user.role === "developer") {
                     res.status(403).json({
                       message: "Admin login not allowed here!",
                     });
@@ -126,7 +126,7 @@ function loginAdmin(req, res) {
                   expiresIn: "3d", // Token kedaluwarsa setelah 3 hari
                 },
                 function (err, token) {
-                  if (user.role === "admin") {
+                  if (user.role === "admin" || user.role === "developer") {
                     res.status(200).json({
                       message: "Admin authentication successful!",
                       token: token,
@@ -157,7 +157,7 @@ function loginAdmin(req, res) {
 }
 
 function getAllUsers(req, res) {
-  if (req.userData.role !== "admin") {
+  if (req.userData.role !== "admin" || req.userData.role !== "developer") {
     return res.status(403).json({ message: "Unauthorized access" });
   }
 
@@ -184,7 +184,7 @@ function getAllUsers(req, res) {
 }
 
 function deleteUser(req, res) {
-  if (req.userData.role !== "admin") {
+  if (req.userData.role !== "admin" || req.userData.role !== "developer") {
     return res.status(403).json({ message: "Only admin can delete users" });
   }
 
