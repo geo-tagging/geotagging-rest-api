@@ -351,7 +351,7 @@ function updateTag(req, res) {
   const uid = req.userData.uid;
   const role = req.userData.role;
 
-  if (role !== "admin") {
+  if (role !== "admin" && role !== "developer") {
     return res.status(403).json({
       message: "Unauthorized account!",
     });
@@ -443,7 +443,7 @@ function deleteTag(req, res) {
   const id_tanaman = req.params.id_tanaman;
   const role = req.userData.role;
 
-  if (role !== "admin") {
+  if (role !== "admin" && role !== "developer") {
     return res.status(403).json({
       message: "Unauthorized account!",
     });
