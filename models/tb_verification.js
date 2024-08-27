@@ -48,34 +48,11 @@ module.exports = (sequelize, DataTypes) => {
       images: DataTypes.STRING,
       id_action: DataTypes.INTEGER,
       uid: DataTypes.INTEGER,
-      createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
     },
     {
       sequelize,
       modelName: "tb_verification",
       tableName: "tb_verification",
-      hooks: {
-        beforeCreate: (record, options) => {
-          record.createdAt = new Date(
-            new Date().getTime() + 8 * 60 * 60 * 1000
-          );
-          record.updatedAt = new Date(
-            new Date().getTime() + 8 * 60 * 60 * 1000
-          );
-        },
-        beforeUpdate: (record, options) => {
-          record.updatedAt = new Date(
-            new Date().getTime() + 8 * 60 * 60 * 1000
-          );
-        },
-      },
     }
   );
   return tb_verification;

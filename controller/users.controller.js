@@ -2,6 +2,7 @@ require("dotenv").config();
 const models = require("../models");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { sendPasswordResetEmail } = require("../helper/email-helper");
 
 function signUp(req, res) {
   models.tb_user
@@ -211,10 +212,83 @@ function deleteUser(req, res) {
     });
 }
 
+function requestPasswordReset(req, res) {
+  // Hanya admin atau developer yang boleh mengakses
+  if (req.userData.role !== "admin" && req.userData.role !== "developer") {
+    return res.status(403).json({ message: "Unauthorized access" });
+  }
+
+  const { email } = req.body;
+
+  models.tb_user
+    .findOne({ where: { email } })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const token = jwt.sign(
+        { email: user.email, uid: user.uid },
+        process.env.JWT_KEY,
+        { expiresIn: "1h" } // Token kedaluwarsa setelah 1 jam
+      );
+
+      const resetLink = `https://logiasphere.com/pages/resetPassword.html?token=${token}`;
+      sendPasswordResetEmail(user.email, resetLink);
+
+      res.status(200).json({
+        message: "Password reset link has been sent to the user's email",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ message: "Something went wrong!" });
+    });
+}
+
+function resetPassword(req, res) {
+  const { token, newPassword } = req.body;
+
+  jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(400).json({ message: "Invalid or expired token" });
+    }
+
+    models.tb_user
+      .findOne({ where: { email: decoded.email } })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        }
+
+        bcryptjs.genSalt(10, (err, salt) => {
+          bcryptjs.hash(newPassword, salt, (err, hash) => {
+            user.password = hash;
+            user
+              .save()
+              .then(() => {
+                res.status(200).json({ message: "Password reset successful" });
+              })
+              .catch((error) => {
+                console.log(error);
+                res.status(500).json({ message: "Something went wrong!" });
+              });
+          });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong!" });
+      });
+  });
+}
+
 module.exports = {
   signUp,
   loginUser,
   loginAdmin,
   getAllUsers,
   deleteUser,
+  requestPasswordReset,
+  resetPassword,
 };
