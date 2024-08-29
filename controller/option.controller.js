@@ -3,12 +3,12 @@ const Sequelize = require("sequelize");
 
 function getAllOption(req, res) {
   Promise.all([
-    models.tb_jenis.findAll({ order: [["nama_jenis", "ASC"]] }),
-    models.tb_kegiatan.findAll({ order: [["nama_kegiatan", "ASC"]] }),
-    models.tb_lokasi.findAll({ order: [["nama_lokasi", "ASC"]] }),
-    models.tb_sk.findAll({ order: [["nama_sk", "ASC"]] }),
-    models.tb_status.findAll({ order: [["nama_status", "ASC"]] }),
-    models.tb_action.findAll({ order: [["nama_action", "ASC"]] }),
+    models.tb_jenis.findAll({ order: [["nama", "ASC"]] }),
+    models.tb_kegiatan.findAll({ order: [["kegiatan", "ASC"]] }),
+    models.tb_lokasi.findAll({ order: [["lokasi", "ASC"]] }),
+    models.tb_sk.findAll({ order: [["skppkh", "ASC"]] }),
+    models.tb_status.findAll({ order: [["status", "ASC"]] }),
+    models.tb_action.findAll({ order: [["action", "ASC"]] }),
   ])
     .then(
       ([
