@@ -12,9 +12,9 @@ function sendPasswordResetEmail(email, resetLink) {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: "Password Reset",
-    text: `Click the following link to reset your password: ${resetLink}`,
-    html: `<p>Click the following link to reset your password:</p><a href="${resetLink}">Reset Password</a>`,
+    subject: "Password Reset Request",
+    text: `Dear user,\n\nWe received a request to reset your password. Please click the link below to proceed with resetting your password. If you did not request this change, please disregard this email.\n\nReset Password: ${resetLink}\n\nBest regards,\nLogiasphere Support Team`,
+    html: `<p>Dear user,</p><p>We received a request to reset your password. Please click the link below to proceed with resetting your password. If you did not request this change, please disregard this email.</p><p><a href="${resetLink}">Reset Password</a></p><p>Best regards,<br/>Logiasphere Support Team</p>`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
