@@ -230,7 +230,7 @@ function requestPasswordReset(req, res) {
       const token = jwt.sign(
         { email: user.email, uid: user.uid },
         process.env.JWT_KEY,
-        { expiresIn: "1h" } // Token kedaluwarsa setelah 1 jam
+        { expiresIn: "2m" } // Token kedaluwarsa setelah 2 menit
       );
 
       const resetLink = `https://logiasphere.com/pages/resetPassword.html?token=${token}`;

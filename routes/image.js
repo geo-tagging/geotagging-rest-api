@@ -14,7 +14,7 @@ router.post(
 
 router.get(
   "/uploads/:filename",
-  // checkAuthMiddleware.checkAuth,
+  checkAuthMiddleware.checkAuth,
   imageController.getImage
 );
 
