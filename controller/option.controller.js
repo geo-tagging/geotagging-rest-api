@@ -1,5 +1,6 @@
 const models = require("../models");
 const Sequelize = require("sequelize");
+const validator = require("fastest-validator");
 
 function getAllOption(req, res) {
   Promise.all([
@@ -79,10 +80,14 @@ function createNewOptionJenis(req, res) {
 function createNewOptionLokasi(req, res) {
   const lokasi = {
     lokasi: req.body.lokasi,
+    region: req.body.region,
+    kecamatan: req.body.kecamatan,
   };
 
   const schema = {
     lokasi: { type: "string", optional: false },
+    region: { type: "string", optional: false },
+    kecamatan: { type: "string", optional: false },
   };
 
   const v = new validator();
