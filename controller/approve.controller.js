@@ -9,7 +9,9 @@ function createNewTag(req, res) {
     id_lokasi: req.body.id_lokasi,
     id_petak: req.body.id_petak,
     id_sk: req.body.id_sk,
+    id_skKerja: req.body.id_skKerja,
     id_status: req.body.id_status,
+    id_statusAreaTanam: req.body.id_statusAreaTanam,
     diameter: req.body.diameter,
     tinggi: req.body.tinggi,
     tanggal_tanam: req.body.tanggal_tanam,
@@ -30,7 +32,9 @@ function createNewTag(req, res) {
     id_lokasi: { type: "number", optional: false },
     id_petak: { type: "number", optional: false },
     id_sk: { type: "number", optional: false },
+    id_skKerja: { type: "number", optional: true },
     id_status: { type: "number", optional: false },
+    id_statusAreaTanam: { type: "number", optional: true },
     diameter: { type: "number", optional: false },
     tinggi: { type: "number", optional: false },
     tanggal_tanam: { type: "string", optional: true },
@@ -87,10 +91,19 @@ function getAllTag(req, res) {
         [Sequelize.col("tb_kegiatan.kegiatan"), "kegiatan"],
         "id_lokasi",
         [Sequelize.col("tb_lokasi.lokasi"), "lokasi"],
+        "id_petak",
+        [Sequelize.col("tb_petakUkur.petak_ukur"), "petak_ukur"],
         "id_sk",
         [Sequelize.col("tb_sk.skppkh"), "skppkh"],
+        "id_skKerja",
+        [Sequelize.col("tb_skKerja.sk_kerja"), "sk_kerja"],
         "id_status",
         [Sequelize.col("tb_status.status"), "status"],
+        "id_statusAreaTanam",
+        [
+          Sequelize.col("tb_statusAreaTanam.status_areaTanam"),
+          "status_areaTanam",
+        ],
         "diameter",
         "tinggi",
         "tanggal_tanam",
@@ -120,11 +133,23 @@ function getAllTag(req, res) {
           attributes: [],
         },
         {
+          model: models.tb_petakUkur,
+          attributes: [],
+        },
+        {
           model: models.tb_sk,
           attributes: [],
         },
         {
+          model: models.tb_skKerja,
+          attributes: [],
+        },
+        {
           model: models.tb_status,
+          attributes: [],
+        },
+        {
+          model: models.tb_statusAreaTanam,
           attributes: [],
         },
         {
@@ -166,10 +191,19 @@ function getTagId(req, res) {
         [Sequelize.col("tb_kegiatan.kegiatan"), "kegiatan"],
         "id_lokasi",
         [Sequelize.col("tb_lokasi.lokasi"), "lokasi"],
+        "id_petak",
+        [Sequelize.col("tb_petakUkur.petak_ukur"), "petak_ukur"],
         "id_sk",
         [Sequelize.col("tb_sk.skppkh"), "skppkh"],
+        "id_skKerja",
+        [Sequelize.col("tb_skKerja.sk_kerja"), "sk_kerja"],
         "id_status",
         [Sequelize.col("tb_status.status"), "status"],
+        "id_statusAreaTanam",
+        [
+          Sequelize.col("tb_statusAreaTanam.status_areaTanam"),
+          "status_areaTanam",
+        ],
         "diameter",
         "tinggi",
         "tanggal_tanam",
@@ -199,11 +233,23 @@ function getTagId(req, res) {
           attributes: [],
         },
         {
+          model: models.tb_petakUkur,
+          attributes: [],
+        },
+        {
           model: models.tb_sk,
           attributes: [],
         },
         {
+          model: models.tb_skKerja,
+          attributes: [],
+        },
+        {
           model: models.tb_status,
+          attributes: [],
+        },
+        {
+          model: models.tb_statusAreaTanam,
           attributes: [],
         },
         {
@@ -240,7 +286,9 @@ function searchTags(req, res) {
   const orderBy = req.query.orderBy;
   const sortBy = req.query.sortBy;
   const keyword = req.query.keyword;
+  const instansi = req.query.instansi; // menambahkan query parameter untuk instansi
 
+  // Memulai query dengan findAll
   models.tb_approve
     .findAll({
       attributes: [
@@ -252,10 +300,19 @@ function searchTags(req, res) {
         [Sequelize.col("tb_kegiatan.kegiatan"), "kegiatan"],
         "id_lokasi",
         [Sequelize.col("tb_lokasi.lokasi"), "lokasi"],
+        "id_petak",
+        [Sequelize.col("tb_petakUkur.petak_ukur"), "petak_ukur"],
         "id_sk",
         [Sequelize.col("tb_sk.skppkh"), "skppkh"],
+        "id_skKerja",
+        [Sequelize.col("tb_skKerja.sk_kerja"), "sk_kerja"],
         "id_status",
         [Sequelize.col("tb_status.status"), "status"],
+        "id_statusAreaTanam",
+        [
+          Sequelize.col("tb_statusAreaTanam.status_areaTanam"),
+          "status_areaTanam",
+        ],
         "diameter",
         "tinggi",
         "tanggal_tanam",
@@ -270,6 +327,7 @@ function searchTags(req, res) {
         [Sequelize.col("tb_action.action"), "action"],
         "uid",
         [Sequelize.col("tb_user.username"), "username"],
+        [Sequelize.col("tb_lokasi.id_major"), "id_major"], // menambahkan instansi ke attributes
       ],
       include: [
         {
@@ -285,11 +343,23 @@ function searchTags(req, res) {
           attributes: [],
         },
         {
+          model: models.tb_petakUkur,
+          attributes: [],
+        },
+        {
           model: models.tb_sk,
           attributes: [],
         },
         {
+          model: models.tb_skKerja,
+          attributes: [],
+        },
+        {
           model: models.tb_status,
+          attributes: [],
+        },
+        {
+          model: models.tb_statusAreaTanam,
           attributes: [],
         },
         {
@@ -315,12 +385,24 @@ function searchTags(req, res) {
           Sequelize.where(Sequelize.col("tb_lokasi.lokasi"), {
             [Sequelize.Op.like]: `%${keyword}%`,
           }),
+          Sequelize.where(Sequelize.col("tb_petakUkur.petak_ukur"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
           Sequelize.where(Sequelize.col("tb_sk.skppkh"), {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          }),
+          Sequelize.where(Sequelize.col("tb_skKerja.sk_kerja"), {
             [Sequelize.Op.like]: `%${keyword}%`,
           }),
           Sequelize.where(Sequelize.col("tb_status.status"), {
             [Sequelize.Op.like]: `%${keyword}%`,
           }),
+          Sequelize.where(
+            Sequelize.col("tb_statusAreaTanam.status_areaTanam"),
+            {
+              [Sequelize.Op.like]: `%${keyword}%`,
+            }
+          ),
           Sequelize.where(Sequelize.col("tb_action.action"), {
             [Sequelize.Op.like]: `%${keyword}%`,
           }),
@@ -331,6 +413,13 @@ function searchTags(req, res) {
             [Sequelize.Op.like]: `%${keyword}%`,
           }),
         ],
+        ...(instansi && {
+          [Sequelize.Op.and]: [
+            Sequelize.where(Sequelize.col("tb_lokasi.id_major"), {
+              [Sequelize.Op.like]: `%${id_major}%`,
+            }),
+          ],
+        }),
       },
       order: [[orderBy, sortBy]],
     })
@@ -363,8 +452,11 @@ function updateTag(req, res) {
     id_jenis: req.body.id_jenis,
     id_kegiatan: req.body.id_kegiatan,
     id_lokasi: req.body.id_lokasi,
+    id_petak: req.body.id_petak,
     id_sk: req.body.id_sk,
+    id_skKerja: req.body.id_skKerja,
     id_status: req.body.id_status,
+    id_statusAreaTanam: req.body.id_statusAreaTanam,
     diameter: req.body.diameter,
     tinggi: req.body.tinggi,
     tanggal_tanam: req.body.tanggal_tanam,
@@ -383,8 +475,11 @@ function updateTag(req, res) {
     id_jenis: { type: "number", optional: false },
     id_kegiatan: { type: "number", optional: false },
     id_lokasi: { type: "number", optional: false },
+    id_petak: { type: "number", optional: false },
     id_sk: { type: "number", optional: false },
+    id_skKerja: { type: "number", optional: true },
     id_status: { type: "number", optional: false },
+    id_statusAreaTanam: { type: "number", optional: true },
     diameter: { type: "number", optional: false },
     tinggi: { type: "number", optional: false },
     tanggal_tanam: { type: "string", optional: true },
@@ -395,6 +490,7 @@ function updateTag(req, res) {
     easting: { type: "string", optional: false },
     northing: { type: "string", optional: false },
     images: { type: "string", optional: true },
+    verification: { type: "string", optional: true },
     id_action: { type: "number", optional: false },
     uid: { type: "number", optional: false },
   };
