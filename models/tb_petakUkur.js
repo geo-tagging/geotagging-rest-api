@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       petak_ukur: DataTypes.STRING,
-      id_lokasi: DataTypes.INTEGER,
     },
     {
       sequelize,

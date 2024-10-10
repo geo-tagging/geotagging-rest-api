@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       tb_boundary.belongsTo(models.tb_petakUkur, { foreignKey: "id_petak" });
+      tb_boundary.belongsTo(models.tb_lokasi, { foreignKey: "id_lokasi" });
     }
   }
   tb_boundary.init(
@@ -20,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       id_petak: DataTypes.INTEGER,
+      id_lokasi: DataTypes.INTEGER,
       latitude: DataTypes.STRING,
       longitude: DataTypes.STRING,
     },

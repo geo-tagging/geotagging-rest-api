@@ -81,6 +81,7 @@ function createNewVerification(req, res) {
 function getAllHistory(req, res) {
   const orderBy = req.query.orderBy;
   const sortBy = req.query.sortBy;
+  const instansi = req.query.instansi;
 
   models.tb_verification
     .findAll({
@@ -126,42 +127,62 @@ function getAllHistory(req, res) {
         {
           model: models.tb_jenis,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_kegiatan,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_lokasi,
           attributes: [],
+          required: true,
+          include: [
+            {
+              model: models.tb_majorArea,
+              attributes: [],
+              required: true,
+              where: {
+                instansi: instansi,
+              },
+            },
+          ],
         },
         {
           model: models.tb_petakUkur,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_sk,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_skKerja,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_status,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_statusAreaTanam,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_action,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_user,
           attributes: [],
+          required: true,
         },
       ],
       order: [[orderBy, sortBy]],
@@ -184,6 +205,7 @@ function searchHistory(req, res) {
   const orderBy = req.query.orderBy;
   const sortBy = req.query.sortBy;
   const keyword = req.query.keyword;
+  const instansi = req.query.instansi;
 
   models.tb_verification
     .findAll({
@@ -198,7 +220,7 @@ function searchHistory(req, res) {
         "id_lokasi",
         [Sequelize.col("tb_lokasi.lokasi"), "lokasi"],
         "id_petak",
-        [Sequelize.col("tb_petakUkur."), "petak_ukur"],
+        [Sequelize.col("tb_petakUkur.petak_ukur"), "petak_ukur"],
         "id_sk",
         [Sequelize.col("tb_sk.skppkh"), "skppkh"],
         "id_skKerja",
@@ -229,42 +251,62 @@ function searchHistory(req, res) {
         {
           model: models.tb_jenis,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_kegiatan,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_lokasi,
           attributes: [],
+          required: true,
+          include: [
+            {
+              model: models.tb_majorArea,
+              attributes: [],
+              required: true,
+              where: {
+                instansi: instansi,
+              },
+            },
+          ],
         },
         {
           model: models.tb_petakUkur,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_sk,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_skKerja,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_status,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_statusAreaTanam,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_action,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_user,
           attributes: [],
+          required: true,
         },
       ],
       where: {

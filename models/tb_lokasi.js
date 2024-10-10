@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       tb_lokasi.hasMany(models.tb_verification, { foreignKey: "id_lokasi" });
       tb_lokasi.hasMany(models.tb_approve, { foreignKey: "id_lokasi" });
+      tb_lokasi.hasMany(models.tb_boundary, { foreignKey: "id_lokasi" });
       tb_lokasi.belongsTo(models.tb_majorArea, { foreignKey: "id_major" });
     }
   }

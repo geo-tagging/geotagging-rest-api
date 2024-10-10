@@ -79,6 +79,7 @@ function createNewTag(req, res) {
 function getAllTag(req, res) {
   const orderBy = req.query.orderBy;
   const sortBy = req.query.sortBy;
+  const instansi = req.query.instansi;
 
   models.tb_approve
     .findAll({
@@ -123,42 +124,62 @@ function getAllTag(req, res) {
         {
           model: models.tb_jenis,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_kegiatan,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_lokasi,
           attributes: [],
+          required: true,
+          include: [
+            {
+              model: models.tb_majorArea,
+              attributes: [],
+              required: true,
+              where: {
+                instansi: instansi,
+              },
+            },
+          ],
         },
         {
           model: models.tb_petakUkur,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_sk,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_skKerja,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_status,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_statusAreaTanam,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_action,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_user,
           attributes: [],
+          required: true,
         },
       ],
       order: [[orderBy, sortBy]],
@@ -286,9 +307,8 @@ function searchTags(req, res) {
   const orderBy = req.query.orderBy;
   const sortBy = req.query.sortBy;
   const keyword = req.query.keyword;
-  const instansi = req.query.instansi; // menambahkan query parameter untuk instansi
+  const instansi = req.query.instansi;
 
-  // Memulai query dengan findAll
   models.tb_approve
     .findAll({
       attributes: [
@@ -327,48 +347,67 @@ function searchTags(req, res) {
         [Sequelize.col("tb_action.action"), "action"],
         "uid",
         [Sequelize.col("tb_user.username"), "username"],
-        [Sequelize.col("tb_lokasi.id_major"), "id_major"], // menambahkan instansi ke attributes
       ],
       include: [
         {
           model: models.tb_jenis,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_kegiatan,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_lokasi,
           attributes: [],
+          required: true,
+          include: [
+            {
+              model: models.tb_majorArea,
+              attributes: [],
+              required: true,
+              where: {
+                instansi: instansi,
+              },
+            },
+          ],
         },
         {
           model: models.tb_petakUkur,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_sk,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_skKerja,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_status,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_statusAreaTanam,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_action,
           attributes: [],
+          required: true,
         },
         {
           model: models.tb_user,
           attributes: [],
+          required: true,
         },
       ],
       where: {
@@ -413,13 +452,6 @@ function searchTags(req, res) {
             [Sequelize.Op.like]: `%${keyword}%`,
           }),
         ],
-        ...(instansi && {
-          [Sequelize.Op.and]: [
-            Sequelize.where(Sequelize.col("tb_lokasi.id_major"), {
-              [Sequelize.Op.like]: `%${id_major}%`,
-            }),
-          ],
-        }),
       },
       order: [[orderBy, sortBy]],
     })
