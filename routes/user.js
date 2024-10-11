@@ -3,11 +3,7 @@ const userController = require("../controller/users.controller");
 const checkAuthMiddleware = require("../middleware/check-auth");
 const router = express.Router();
 
-router.post(
-  "/sign-up",
-  // checkAuthMiddleware.checkAuth,
-  userController.signUp
-);
+router.post("/sign-up", checkAuthMiddleware.checkAuth, userController.signUp);
 
 router.post("/loginAdmin", userController.loginAdmin);
 
