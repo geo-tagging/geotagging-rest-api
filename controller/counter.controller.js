@@ -3,10 +3,10 @@ const Sequelize = require("sequelize");
 const validator = require("fastest-validator");
 
 function getCounter(req, res) {
-  const id = req.params.id;
+  const id_major = req.params.id_major;
 
-  models.tb_counter
-    .findByPk(id)
+  models.tb_majorArea
+    .findByPk(id_major)
     .then((result) => {
       if (result) {
         res.status(200).json({
@@ -27,14 +27,14 @@ function getCounter(req, res) {
 }
 
 function updateCounter(req, res) {
-  const id = req.params.id;
+  const id_major = req.params.id_major;
 
   const updateCounter = {
-    count: req.body.count,
+    counter: req.body.counter,
   };
 
   const schema = {
-    count: { type: "number", optional: false },
+    counter: { type: "number", optional: false },
   };
 
   const v = new validator();
@@ -47,8 +47,8 @@ function updateCounter(req, res) {
     });
   }
 
-  models.tb_counter
-    .findOne({ where: { id: id } })
+  models.tb_majorArea
+    .findOne({ where: { id_major: id_major } })
     .then((counter) => {
       if (!counter) {
         return res.status(404).json({
