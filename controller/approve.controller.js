@@ -159,7 +159,7 @@ function getAllTag(req, res) {
         {
           model: models.tb_skKerja,
           attributes: [],
-          required: true,
+          required: false,
         },
         {
           model: models.tb_status,
@@ -169,7 +169,7 @@ function getAllTag(req, res) {
         {
           model: models.tb_statusAreaTanam,
           attributes: [],
-          required: true,
+          required: false,
         },
         {
           model: models.tb_action,
@@ -387,7 +387,7 @@ function searchTags(req, res) {
         {
           model: models.tb_skKerja,
           attributes: [],
-          required: true,
+          required: false,
         },
         {
           model: models.tb_status,
@@ -397,7 +397,7 @@ function searchTags(req, res) {
         {
           model: models.tb_statusAreaTanam,
           attributes: [],
-          required: true,
+          required: false,
         },
         {
           model: models.tb_action,

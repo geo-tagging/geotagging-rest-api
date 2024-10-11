@@ -162,7 +162,7 @@ function getAllHistory(req, res) {
         {
           model: models.tb_skKerja,
           attributes: [],
-          required: true,
+          required: false,
         },
         {
           model: models.tb_status,
@@ -172,7 +172,7 @@ function getAllHistory(req, res) {
         {
           model: models.tb_statusAreaTanam,
           attributes: [],
-          required: true,
+          required: false,
         },
         {
           model: models.tb_action,
@@ -286,7 +286,7 @@ function searchHistory(req, res) {
         {
           model: models.tb_skKerja,
           attributes: [],
-          required: true,
+          required: false,
         },
         {
           model: models.tb_status,
@@ -296,7 +296,7 @@ function searchHistory(req, res) {
         {
           model: models.tb_statusAreaTanam,
           attributes: [],
-          required: true,
+          required: false,
         },
         {
           model: models.tb_action,
